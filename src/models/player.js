@@ -60,8 +60,6 @@ export default class Player {
 
         const collidedWithTree = this.checkTreeCollision(newX, newY, trees);
 
-        console.log(this.isTransitioning)
-
         if (!collidedWithTree && !this.isTransitioning) {
             this.x = newX;
             this.y = newY;
