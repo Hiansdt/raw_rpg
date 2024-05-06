@@ -13,6 +13,7 @@ export default class Player {
             ArrowLeft: false,
             ArrowRight: false
         }
+        this.isTransitioning = ''
         this.createPlayerElement();
     }
 
@@ -59,7 +60,9 @@ export default class Player {
 
         const collidedWithTree = this.checkTreeCollision(newX, newY, trees);
 
-        if (!collidedWithTree) {
+        console.log(this.isTransitioning)
+
+        if (!collidedWithTree && !this.isTransitioning) {
             this.x = newX;
             this.y = newY;
         }
@@ -93,16 +96,9 @@ export default class Player {
                 playerRect.top < treeRect.bottom &&
                 playerRect.bottom > treeRect.top
             ) {
-                console.log('a')
                 // Collision detected, return true
                 return true;
             }
-        }
-    }
-
-    handleTreeCollision(trees) {
-        if (this.checkTreeCollision(trees)) {
-            //impede movement
         }
     }
 
@@ -114,7 +110,7 @@ export default class Player {
         this.move(deltaTime, trees, coins);
         this.updateVisualPosition();
     }
-
+    
     updateVisualPosition() {
         this.element.style.left = this.x + '%';
         this.element.style.top = this.y + '%';
