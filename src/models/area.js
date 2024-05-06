@@ -8,18 +8,20 @@ export class Area {
         this.location = location;
     }
 
-    removeArea() {
+    removeArea(player) {
+        player.isTransitioning = true
         let oldAreaElement = document.querySelector('.area');
         if (oldAreaElement) {
-            oldAreaElement.style.animation = 'area-fade-out 1s forwards';
+            oldAreaElement.style.animation = 'area-fade-out 0.5s forwards';
             oldAreaElement.addEventListener('animationend', () => {
+                player.isTransitioning = false  
                 oldAreaElement.remove();
             });
         }
     }
 
-    renderArea() {
-        this.removeArea()
+    renderArea(player) {
+        this.removeArea(player)
         let areaElement = document.createElement('div');
         let gameContainer = document.querySelector('#game-container');
         gameContainer.appendChild(areaElement);

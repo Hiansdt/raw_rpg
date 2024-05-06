@@ -30,7 +30,7 @@ export default class AreaManager {
             const areaExists = this.areaExistsInDirection(-1, 0);
             this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x - 1, y: this.currentArea.location.y });
             this.allAreas.push(this.currentArea);
-            this.currentArea.renderArea(this.gameContainer);
+            this.currentArea.renderArea(player);
             return;
         }
 
@@ -39,7 +39,7 @@ export default class AreaManager {
             const areaExists = this.areaExistsInDirection(1, 0);
             this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x + 1, y: this.currentArea.location.y });
             this.allAreas.push(this.currentArea);
-            this.currentArea.renderArea(this.gameContainer);
+            this.currentArea.renderArea(player);
             return;
         }
 
@@ -48,7 +48,7 @@ export default class AreaManager {
             const areaExists = this.areaExistsInDirection(0, -1);
             this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y - 1 });
             this.allAreas.push(this.currentArea);
-            this.currentArea.renderArea(this.gameContainer);
+            this.currentArea.renderArea(player);
             return;
         }
 
@@ -57,7 +57,7 @@ export default class AreaManager {
             const areaExists = this.areaExistsInDirection(0, 1);
             this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y + 1 });
             this.allAreas.push(this.currentArea);
-            this.currentArea.renderArea(this.gameContainer);
+            this.currentArea.renderArea(player);
             return;
         }
     }
