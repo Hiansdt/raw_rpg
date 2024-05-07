@@ -27,7 +27,7 @@ export class Tree {
     getTreePosition() {
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        if (x < 5 || x > 95 || y < 5 || y > 80) {
+        if (x < 5 || x > 95 || y < 5 || y > 80 || (x <= 65 && x >= 40 && y <= 55 && y >= 30)) {
             return this.getTreePosition();
         }
         this.x = x;
