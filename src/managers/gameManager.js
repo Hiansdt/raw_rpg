@@ -5,10 +5,9 @@ export default class GameManager {
     }
 
     update(deltaTime) {
-        // Update game logic here
         this.player.update(deltaTime, this.areaManager.currentArea.treeManager.trees, this.areaManager.currentArea.coinManager.coins);
+
         this.areaManager.update(deltaTime, this.player);
-        // Other game updates
     }
 
     startGameLoop() {

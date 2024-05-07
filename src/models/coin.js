@@ -6,7 +6,7 @@ export class Coin {
         this.y = Math.floor(Math.random() * 100);
         this.width = GAME_SETTINGS.COIN_WIDTH;
         this.height = GAME_SETTINGS.COIN_HEIGHT;
-        this.value = 1;
+        this.value = GAME_SETTINGS.COIN_VALUE;
         this.element = null;
     }
 
