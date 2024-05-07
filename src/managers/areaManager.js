@@ -1,4 +1,5 @@
 import { Area } from '../models/area.js';
+import { GAME_SETTINGS } from '../utils/constants.js';
 
 export default class AreaManager {
     constructor(player) {
@@ -28,7 +29,7 @@ export default class AreaManager {
         if (player.x < 0) {
             player.x = 100;
             const areaExists = this.areaExistsInDirection(-1, 0);
-            this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x - 1, y: this.currentArea.location.y });
+            this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x - 1, y: this.currentArea.location.y });
             this.allAreas.push(this.currentArea);
             this.currentArea.renderArea(player);
             return;
@@ -37,7 +38,7 @@ export default class AreaManager {
         if (player.x > 100) {
             player.x = 0;
             const areaExists = this.areaExistsInDirection(1, 0);
-            this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x + 1, y: this.currentArea.location.y });
+            this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x + 1, y: this.currentArea.location.y });
             this.allAreas.push(this.currentArea);
             this.currentArea.renderArea(player);
             return;
@@ -46,7 +47,7 @@ export default class AreaManager {
         if (player.y < 0) {
             player.y = 100;
             const areaExists = this.areaExistsInDirection(0, -1);
-            this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y - 1 });
+            this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y - 1 });
             this.allAreas.push(this.currentArea);
             this.currentArea.renderArea(player);
             return;
@@ -55,7 +56,7 @@ export default class AreaManager {
         if (player.y > 100) {
             player.y = 0;
             const areaExists = this.areaExistsInDirection(0, 1);
-            this.currentArea = areaExists ? areaExists : new Area(10, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y + 1 });
+            this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y + 1 });
             this.allAreas.push(this.currentArea);
             this.currentArea.renderArea(player);
             return;
