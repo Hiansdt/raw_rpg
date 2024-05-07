@@ -11,5 +11,5 @@ export const GAME_SETTINGS = {
     TREE_HEIGHT: 70,
     COIN_WIDTH: 30,
     COIN_HEIGHT: 30,
-    COIN_VALUE: 1,
+    COIN_VALUE: 2,
 }

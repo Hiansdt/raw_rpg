@@ -13,12 +13,20 @@ export default class Player {
             ArrowLeft: false,
             ArrowRight: false
         }
+        this.coins = 0;
         this.isTransitioning = ''
         this.createPlayerElement();
     }
 
     createPlayerElement() {
         let playerElement = document.createElement('div');
+        let coinsAmount = document.createElement('div');
+        coinsAmount.id = 'coins-amount';
+        coinsAmount.innerText = 'Coins: ' + this.coins;
+        coinsAmount.style.position = 'absolute';
+        coinsAmount.style.top = '10px';
+        coinsAmount.style.right = '10px';
+
         let gameContainer = document.querySelector('#game-container');
         playerElement.id = 'player';
         playerElement.style.width = this.width + 'px';
@@ -28,6 +36,7 @@ export default class Player {
         playerElement.style.left = this.x + '%';
         playerElement.style.backgroundColor = this.color;
         this.element = playerElement;
+        gameContainer.appendChild(coinsAmount);
         gameContainer.appendChild(playerElement);
 
         document.addEventListener('keydown', (event) => {
@@ -60,6 +69,8 @@ export default class Player {
 
         const collidedWithTree = this.checkTreeCollision(newX, newY, trees);
 
+        this.checkCoinCollision(newX, newY, coins);
+
         if (!collidedWithTree && !this.isTransitioning) {
             this.x = newX;
             this.y = newY;
@@ -67,49 +78,72 @@ export default class Player {
     }
 
     checkTreeCollision(newXPercent, newYPercent, trees) {
-        // Implement tree collision logic based on player position and tree positions
         const gameContainer = document.querySelector('#game-container');
         const gameContainerRect = gameContainer.getBoundingClientRect();
         const gameContainerWidth = gameContainerRect.width;
         const gameContainerHeight = gameContainerRect.height;
-    
-        // Convert percentages to pixel values based on game container dimensions
+
         const newX = (newXPercent / 100) * gameContainerWidth;
         const newY = (newYPercent / 100) * gameContainerHeight;
         for (let tree of trees) {
             const treeRect = tree.element.getBoundingClientRect();
 
-            // Calculate the potential new player rectangle based on newX, newY
             const playerRect = {
-                top: newY,
-                bottom: newY + this.height,
-                left: newX,
-                right: newX + this.width
+                top: newY - 10,
+                bottom: newY + this.height - 10,
+                left: newX - 9,
+                right: newX + this.width - 20
             };
 
-            // Check for collision between player and tree rectangles
             if (
                 playerRect.left < treeRect.right &&
                 playerRect.right > treeRect.left &&
                 playerRect.top < treeRect.bottom &&
                 playerRect.bottom > treeRect.top
             ) {
-                // Collision detected, return true
                 return true;
             }
         }
     }
 
-    checkCoinCollision(coins) {
-        // Implement coin collision logic based on player position and coin positions
+    checkCoinCollision(newXPercent, newYPercent, coins) {
+        const gameContainer = document.querySelector('#game-container');
+        const gameContainerRect = gameContainer.getBoundingClientRect();
+        const gameContainerWidth = gameContainerRect.width;
+        const gameContainerHeight = gameContainerRect.height;
+
+        const newX = (newXPercent / 100) * gameContainerWidth;
+        const newY = (newYPercent / 100) * gameContainerHeight;
+        const playerRect = {
+            top: newY,
+            bottom: newY + this.height,
+            left: newX,
+            right: newX + this.width
+        };
+
+        for (let coin of coins) {
+            const coinRect = coin.element.getBoundingClientRect();
+
+            if (
+                playerRect.left < coinRect.right &&
+                playerRect.right > coinRect.left &&
+                playerRect.top < coinRect.bottom &&
+                playerRect.bottom > coinRect.top
+            ) {
+                coin.element.remove();
+                coins.splice(coins.indexOf(coin), 1);
+                this.coins += coin.value;
+                document.querySelector('#coins-amount').innerText = 'Coins: ' + this.coins;
+            }
+        }
     }
 
     update(deltaTime, trees, coins) {
         this.move(deltaTime, trees, coins);
-        this.updateVisualPosition();
+        this.updateVisuals();
     }
-    
-    updateVisualPosition() {
+
+    updateVisuals() {
         this.element.style.left = this.x + '%';
         this.element.style.top = this.y + '%';
     }
