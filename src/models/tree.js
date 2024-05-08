@@ -1,11 +1,11 @@
 import { GAME_SETTINGS } from "../utils/constants.js";
 export class Tree {
-    constructor() {
+    constructor(trees) {
         this.id = Math.floor(Math.random() * 1000);
         this.width = GAME_SETTINGS.TREE_WIDTH;
         this.height = GAME_SETTINGS.TREE_HEIGHT;
         this.element = null;
-        this.getTreePosition();
+        this.getTreePosition(trees);
     }
 
     createTreeElement() {
@@ -27,7 +27,11 @@ export class Tree {
     getTreePosition() {
         const x = Math.random() * 100;
         const y = Math.random() * 100;
-        if (x < 5 || x > 95 || y < 5 || y > 80 || (x <= 65 && x >= 40 && y <= 55 && y >= 30)) {
+
+        const isNearBorder = (x < 5 || x > 95 || y < 5 || y > 80 );
+        const isNearPlayer =  (x <= 65 && x >= 40 && y <= 55 && y >= 30);
+
+        if (isNearBorder || isNearPlayer) {
             return this.getTreePosition();
         }
         this.x = x;
