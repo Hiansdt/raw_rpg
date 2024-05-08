@@ -13,8 +13,9 @@ export class Coin {
     createCoinElement() {
         let coinElement = document.createElement('div');
         coinElement.classList.add('coin');
-        coinElement.style.width = this.width + 'px';
-        coinElement.style.height = this.height + 'px';
+        coinElement.style.width = this.width + '%';
+        coinElement.style.height = 'auto';
+        coinElement.style.paddingTop = this.height + '%';
         coinElement.style.position = 'absolute';
         coinElement.style.top = this.y + '%';
         coinElement.style.left = this.x + '%';

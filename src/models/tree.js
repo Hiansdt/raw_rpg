@@ -13,13 +13,15 @@ export class Tree {
         
         treeElement.classList.add('tree');
 
-        treeElement.style.width = this.width + 'px';
-        treeElement.style.height = this.height + 'px';
+        treeElement.style.width = this.width + '%';
+        treeElement.style.height = 'auto';
+        treeElement.style.paddingTop = this.height + '%';
         treeElement.style.position = 'absolute';
         treeElement.style.top = this.y + '%';
         treeElement.style.left = this.x + '%';
         treeElement.style.backgroundImage = `url(./assets/images/tree.svg)`;
         treeElement.style.backgroundSize = 'cover';
+        treeElement.style.zIndex = '1';
         this.element = treeElement;
         return treeElement;
     }
@@ -28,8 +30,8 @@ export class Tree {
         const x = Math.random() * 100;
         const y = Math.random() * 100;
 
-        const isNearBorder = (x < 5 || x > 95 || y < 5 || y > 80 );
-        const isNearPlayer =  (x <= 65 && x >= 40 && y <= 55 && y >= 30);
+        const isNearBorder = (x > 96.5 || y > 86.5 );
+        const isNearPlayer =  (x <= 55 && x >= 40 && y <= 55 && y >= 30);
 
         if (isNearBorder || isNearPlayer) {
             return this.getTreePosition();
