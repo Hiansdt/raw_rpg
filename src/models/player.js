@@ -29,8 +29,9 @@ export default class Player {
 
         let gameContainer = document.querySelector('#game-container');
         playerElement.id = 'player';
-        playerElement.style.width = this.width + 'px';
-        playerElement.style.height = this.height + 'px';
+        playerElement.style.width = this.width + '%';
+        playerElement.style.height = 'auto';
+        playerElement.style.paddingTop = this.height + '%';
         playerElement.style.position = 'absolute';
         playerElement.style.top = this.y + '%';
         playerElement.style.left = this.x + '%';
@@ -87,19 +88,19 @@ export default class Player {
         const newY = (newYPercent / 100) * gameContainerHeight;
         for (let tree of trees) {
             const treeRect = tree.element.getBoundingClientRect();
-
-            const playerRect = {
-                top: newY - 10,
-                bottom: newY + this.height - 10,
-                left: newX - 9,
-                right: newX + this.width - 20
+            const playerRect = this.element.getBoundingClientRect();
+            const newPlayerRect = {
+                top: newY - playerRect.height/2,
+                bottom: newY - treeRect.height + playerRect.height/2,
+                left: newX + treeRect.width/2 - playerRect.width,
+                right: newX - treeRect.width/2 + playerRect.width
             };
 
             if (
-                playerRect.left < treeRect.right &&
-                playerRect.right > treeRect.left &&
-                playerRect.top < treeRect.bottom &&
-                playerRect.bottom > treeRect.top
+                newPlayerRect.left < treeRect.right &&
+                newPlayerRect.right > treeRect.left &&
+                newPlayerRect.top < treeRect.bottom &&
+                newPlayerRect.bottom > treeRect.top
             ) {
                 return true;
             }
