@@ -9,7 +9,7 @@ export default class TreeManager {
 
     createTrees() {
         for (let i = 0; i < this.maxTrees; i++) {
-            let tree = new Tree();
+            let tree = new Tree(this.trees);
             this.trees.push(tree);
         }
     }
