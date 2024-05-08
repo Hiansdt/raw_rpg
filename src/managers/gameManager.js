@@ -5,7 +5,9 @@ export default class GameManager {
     }
 
     update(deltaTime) {
-        this.player.update(deltaTime, this.areaManager.currentArea.treeManager.trees, this.areaManager.currentArea.coinManager.coins);
+        const trees = this.areaManager.currentArea.treeManager.trees;
+        const coins = this.areaManager.currentArea.coinManager.coins;
+        this.player.update(deltaTime, trees, coins);
 
         this.areaManager.update(deltaTime, this.player);
     }

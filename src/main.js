@@ -15,4 +15,4 @@ const areaManager = new AreaManager(player);
 const gameManager = new GameManager(player, areaManager);
 
 gameManager.startGameLoop();
-areaManager.createInitialArea(10, 3, { x: 0, y: 0 });
+areaManager.createInitialArea(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: 0, y: 0 });
