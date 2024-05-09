@@ -21,6 +21,8 @@ export class Coin {
         coinElement.style.left = this.x + '%';
         coinElement.style.backgroundImage = `url(./assets/images/coin.svg)`;
         coinElement.style.backgroundSize = 'cover';
+        coinElement.style.borderRadius = '50%';
+        coinElement.style.zIndex = '1';
         this.element = coinElement;
         return coinElement;
     }
