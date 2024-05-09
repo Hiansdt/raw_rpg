@@ -3,8 +3,6 @@ export default class Player {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.width = width;
-        this.height = height;
         this.color = color;
         this.element = null;
         this.keys = {
@@ -29,13 +27,6 @@ export default class Player {
 
         let gameContainer = document.querySelector('#game-container');
         playerElement.id = 'player';
-        playerElement.style.width = this.width + '%';
-        playerElement.style.height = 'auto';
-        playerElement.style.paddingTop = this.height + '%';
-        playerElement.style.position = 'absolute';
-        playerElement.style.top = this.y + '%';
-        playerElement.style.left = this.x + '%';
-        playerElement.style.backgroundColor = this.color;
         this.element = playerElement;
         gameContainer.appendChild(coinsAmount);
         gameContainer.appendChild(playerElement);
@@ -61,10 +52,23 @@ export default class Player {
         }
         if (this.keys.ArrowLeft) {
             dx -= this.speed * deltaTime / 1000;
+            this.element.classList.remove('playerRight')
+            this.element.classList.add('playerLeft')
         }
         if (this.keys.ArrowRight) {
             dx += this.speed * deltaTime / 1000;
+            this.element.classList.remove('playeLeft')
+            this.element.classList.add('playerRight')
         }
+
+        if(!this.keys.ArrowUp && !this.keys.ArrowDown && !this.keys.ArrowLeft && !this.keys.ArrowRight) {
+            this.element.classList.remove('playerRunning')
+            this.element.classList.add('playerIdle')
+        } else {
+            this.element.classList.remove('playerIdle')
+            this.element.classList.add('playerRunning')
+        }
+
         const newX = this.x + dx;
         const newY = this.y + dy;
 
@@ -90,10 +94,10 @@ export default class Player {
             const treeRect = tree.element.getBoundingClientRect();
             const playerRect = this.element.getBoundingClientRect();
             const newPlayerRect = {
-                top: newY - playerRect.height/2,
-                bottom: newY - treeRect.height + playerRect.height/2,
-                left: newX + treeRect.width/2 - playerRect.width,
-                right: newX - treeRect.width/2 + playerRect.width
+                top: newY,
+                bottom: newY + playerRect.height*0.75 - treeRect.height,
+                left: newX + playerRect.width/2,
+                right: newX + playerRect.width/5
             };
 
             if (
@@ -108,28 +112,22 @@ export default class Player {
     }
 
     checkCoinCollision(newXPercent, newYPercent, coins) {
-        const gameContainer = document.querySelector('#game-container');
-        const gameContainerRect = gameContainer.getBoundingClientRect();
-        const gameContainerWidth = gameContainerRect.width;
-        const gameContainerHeight = gameContainerRect.height;
-
-        const newX = (newXPercent / 100) * gameContainerWidth;
-        const newY = (newYPercent / 100) * gameContainerHeight;
-        const playerRect = {
-            top: newY,
-            bottom: newY + this.height,
-            left: newX,
-            right: newX + this.width
+        const playerRect = this.element.getBoundingClientRect();
+        const newPlayerRect = {
+            top: playerRect.top,
+            bottom: playerRect.bottom,
+            left: playerRect.left + playerRect.width/2,
+            right: playerRect.right - playerRect.width/2
         };
 
         for (let coin of coins) {
             const coinRect = coin.element.getBoundingClientRect();
 
             if (
-                playerRect.left < coinRect.right &&
-                playerRect.right > coinRect.left &&
-                playerRect.top < coinRect.bottom &&
-                playerRect.bottom > coinRect.top
+                newPlayerRect.left < coinRect.right &&
+                newPlayerRect.right > coinRect.left &&
+                newPlayerRect.top < coinRect.bottom &&
+                newPlayerRect.bottom > coinRect.top
             ) {
                 coin.element.remove();
                 coins.splice(coins.indexOf(coin), 1);
