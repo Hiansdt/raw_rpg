@@ -16,8 +16,6 @@ body, html {
 
 #player {
     position: absolute;
-    top: 50%;
-    left: 50%;
     height: 39px;
     width: 126px;
     background-size: cover;
@@ -25,24 +23,71 @@ body, html {
     z-index: 0;
 }
 
+#upgrade-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1919198a;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    display: none;
+}
+
+#upgrades-tab {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    position: absolute;
+    top: 15vh;
+    left: 20vw;
+    width: 60vw;
+    height: 70vh;
+    background-color: #262626;
+    box-shadow: 10px 10px 5px black;
+}
+
+#upgrades {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.upgrade {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 10px;
+    width: 100%;
+}
+
 .playerIdle {
     background-image: url('./assets/player/idle.png');
     animation: idle steps(5) 1s infinite;
-    transform: scale(1.4);
 }
 
 .playerRunning {
     background-image: url('./assets/player/run.png');
     animation: walk steps(8) 0.5s infinite;
-    transform: scale(1.4);
 }
 
 .playerLeft {
-    transform: scaleX(-1.4) scaleY(1.4);
+    transform: scaleX(-1);
 }
 
 .playerRight {
-    transform: scale(1.4);
+    transform: scale(1);
 }
 
 .coin {

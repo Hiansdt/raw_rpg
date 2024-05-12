@@ -17,8 +17,8 @@ export class Coin {
         coinElement.style.height = 'auto';
         coinElement.style.paddingTop = this.height + '%';
         coinElement.style.position = 'absolute';
-        coinElement.style.top = this.y + '%';
-        coinElement.style.left = this.x + '%';
+        coinElement.style.top = this.y + 'px';
+        coinElement.style.left = this.x + 'px';
         coinElement.style.backgroundImage = `url(./assets/images/coin.svg)`;
         coinElement.style.backgroundSize = 'cover';
         coinElement.style.borderRadius = '50%';

@@ -1,3 +1,4 @@
+import { GAME_SETTINGS } from "../utils/constants.js";
 export default class Player {
     constructor(x, y, speed, width, height, color) {
         this.x = x;
@@ -82,42 +83,41 @@ export default class Player {
         }
     }
 
-    checkTreeCollision(newXPercent, newYPercent, trees) {
-        const gameContainer = document.querySelector('#game-container');
-        const gameContainerRect = gameContainer.getBoundingClientRect();
-        const gameContainerWidth = gameContainerRect.width;
-        const gameContainerHeight = gameContainerRect.height;
-
-        const newX = (newXPercent / 100) * gameContainerWidth;
-        const newY = (newYPercent / 100) * gameContainerHeight;
+    checkTreeCollision(newX, newY, trees) {
+        const playerRect = this.element.getBoundingClientRect();
+        const newPlayerRect = {
+            top: newY + playerRect.height * 0.1,
+            bottom: newY + playerRect.height - playerRect.height * 0.1,
+            left: newX + playerRect.width * 0.35,
+            right: newX + playerRect.width - playerRect.width * 0.35
+        };
         for (let tree of trees) {
             const treeRect = tree.element.getBoundingClientRect();
-            const playerRect = this.element.getBoundingClientRect();
-            const newPlayerRect = {
-                top: newY,
-                bottom: newY + playerRect.height*0.75 - treeRect.height,
-                left: newX + playerRect.width/2,
-                right: newX + playerRect.width/5
-            };
+            const newTreeRect = {
+                top: treeRect.bottom,
+                bottom: treeRect.bottom,
+                left: treeRect.left + treeRect.width * 0.4,
+                right: treeRect.right - treeRect.width * 0.4
+            }
 
             if (
-                newPlayerRect.left < treeRect.right &&
-                newPlayerRect.right > treeRect.left &&
-                newPlayerRect.top < treeRect.bottom &&
-                newPlayerRect.bottom > treeRect.top
+                newPlayerRect.left < newTreeRect.right &&
+                newPlayerRect.right > newTreeRect.left &&
+                newPlayerRect.top < newTreeRect.bottom &&
+                newPlayerRect.bottom > newTreeRect.top
             ) {
                 return true;
             }
         }
     }
 
-    checkCoinCollision(newXPercent, newYPercent, coins) {
+    checkCoinCollision(newX, newY, coins) {
         const playerRect = this.element.getBoundingClientRect();
         const newPlayerRect = {
-            top: playerRect.top,
-            bottom: playerRect.bottom,
-            left: playerRect.left + playerRect.width/2,
-            right: playerRect.right - playerRect.width/2
+            top: newY + playerRect.height * 0.1,
+            bottom: newY + playerRect.height - playerRect.height * 0.1,
+            left: newX + playerRect.width * 0.35,
+            right: newX + playerRect.width - playerRect.width * 0.35
         };
 
         for (let coin of coins) {
@@ -132,9 +132,13 @@ export default class Player {
                 coin.element.remove();
                 coins.splice(coins.indexOf(coin), 1);
                 this.coins += coin.value;
-                document.querySelector('#coins-amount').innerText = 'Coins: ' + this.coins;
+                this.updateCoinAmount();
             }
         }
+    }
+
+    updateCoinAmount() {
+        document.querySelector('#coins-amount').innerText = 'Coins: ' + this.coins;
     }
 
     update(deltaTime, trees, coins) {
@@ -143,7 +147,7 @@ export default class Player {
     }
 
     updateVisuals() {
-        this.element.style.left = this.x + '%';
-        this.element.style.top = this.y + '%';
+        this.element.style.left = this.x + 'px';
+        this.element.style.top = this.y + 'px';
     }
 }

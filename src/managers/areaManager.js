@@ -26,8 +26,9 @@ export default class AreaManager {
     }
 
     handleAreaChange(player) {
+        const gameContainerRect = this.gameContainer.getBoundingClientRect();
         if (player.x < 0) {
-            player.x = 100;
+            player.x = gameContainerRect.width - 10;
             const areaExists = this.areaExistsInDirection(-1, 0);
             this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x - 1, y: this.currentArea.location.y });
             this.allAreas.push(this.currentArea);
@@ -35,7 +36,7 @@ export default class AreaManager {
             return;
         }
 
-        if (player.x > 100) {
+        if (player.x > gameContainerRect.width) {
             player.x = 0;
             const areaExists = this.areaExistsInDirection(1, 0);
             this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x + 1, y: this.currentArea.location.y });
@@ -45,7 +46,7 @@ export default class AreaManager {
         }
 
         if (player.y < 0) {
-            player.y = 100;
+            player.y = gameContainerRect.height;
             const areaExists = this.areaExistsInDirection(0, -1);
             this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y - 1 });
             this.allAreas.push(this.currentArea);
@@ -53,7 +54,7 @@ export default class AreaManager {
             return;
         }
 
-        if (player.y > 100) {
+        if (player.y > gameContainerRect.height) {
             player.y = 0;
             const areaExists = this.areaExistsInDirection(0, 1);
             this.currentArea = areaExists ? areaExists : new Area(GAME_SETTINGS.STANDARD_TREE_COUNT, 3, { x: this.currentArea.location.x, y: this.currentArea.location.y + 1 });

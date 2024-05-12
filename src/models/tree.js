@@ -18,24 +18,23 @@ export class Tree {
         treeElement.style.height = 'auto';
         treeElement.style.paddingTop = this.height + '%';
         treeElement.style.position = 'absolute';
-        treeElement.style.top = this.y + '%';
-        treeElement.style.left = this.x + '%';
-        treeElement.style.borderRadius = '50%';
+        treeElement.style.top = this.y + 'px';
+        treeElement.style.left = this.x + 'px';
         // treeElement.style.backgroundImage = `url(./assets/images/pineTree.png)`;
         treeElement.style.backgroundImage = `url(./assets/images/pineTreeNight.png)`;
         treeElement.style.backgroundSize = 'cover';
-        treeElement.style.filter = 'drop-shadow(10px -30px 2px rgba(0, 0, 0, 0.5))';
+        treeElement.style.filter = 'drop-shadow(10px -50px 3px rgba(0, 0, 0, 0.5))';
         treeElement.style.zIndex = this.zIndex;
         this.element = treeElement;
         return treeElement;
     }
 
     getTreePosition(trees) {
-        const x = Math.floor(Math.random() * 100);
-        const y = Math.floor(Math.random() * 100);
-
-        const isNearBorder = (x > 96.5 || y > 86.5 );
-        const isNearPlayer =  (x <= 55 && x >= 40 && y <= 55 && y >= 30);
+        const window = document.querySelector('#game-container').getBoundingClientRect();
+        const x = Math.floor(Math.random() * window.width);
+        const y = Math.floor(Math.random() * window.height);
+        const isNearBorder = (x > window.width * 0.95 || y > window.height*0.85 );
+        const isNearPlayer =  (x <= window.width/2 + 150 && x >= window.width/2 - 150 && y <= window.height/2 + 150 && y >= window.height/2 - 150);
         if (isNearBorder || isNearPlayer) {
             return this.getTreePosition(trees);
         }
