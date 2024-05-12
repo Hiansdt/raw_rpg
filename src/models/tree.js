@@ -1,12 +1,12 @@
 import { GAME_SETTINGS } from "../utils/constants.js";
 export class Tree {
-    constructor(trees) {
+    constructor() {
         this.id = Math.floor(Math.random() * 1000);
         this.width = GAME_SETTINGS.TREE_WIDTH;
         this.height = GAME_SETTINGS.TREE_HEIGHT;
         this.zIndex = 0;
         this.element = null;
-        this.getTreePosition(trees);
+        this.getTreePosition();
     }
 
     createTreeElement() {
@@ -29,14 +29,14 @@ export class Tree {
         return treeElement;
     }
 
-    getTreePosition(trees) {
+    getTreePosition() {
         const window = document.querySelector('#game-container').getBoundingClientRect();
         const x = Math.floor(Math.random() * window.width);
         const y = Math.floor(Math.random() * window.height);
         const isNearBorder = (x > window.width * 0.95 || y > window.height*0.85 );
         const isNearPlayer =  (x <= window.width/2 + 150 && x >= window.width/2 - 150 && y <= window.height/2 + 150 && y >= window.height/2 - 150);
         if (isNearBorder || isNearPlayer) {
-            return this.getTreePosition(trees);
+            return this.getTreePosition();
         }
         this.zIndex = y;
         this.x = x;

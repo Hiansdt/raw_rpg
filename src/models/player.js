@@ -75,7 +75,7 @@ export default class Player {
 
         const collidedWithTree = this.checkTreeCollision(newX, newY, trees);
 
-        this.checkCoinCollision(newX, newY, coins);
+        this.checkCoinCollision(coins);
 
         if (!collidedWithTree && !this.isTransitioning) {
             this.x = newX;
@@ -111,13 +111,13 @@ export default class Player {
         }
     }
 
-    checkCoinCollision(newX, newY, coins) {
+    checkCoinCollision(coins) {
         const playerRect = this.element.getBoundingClientRect();
         const newPlayerRect = {
-            top: newY + playerRect.height * 0.1,
-            bottom: newY + playerRect.height - playerRect.height * 0.1,
-            left: newX + playerRect.width * 0.35,
-            right: newX + playerRect.width - playerRect.width * 0.35
+            top: playerRect.top + playerRect.height * 0.1,
+            bottom: playerRect.top + playerRect.height - playerRect.height * 0.1,
+            left: playerRect.left + playerRect.width * 0.35,
+            right: playerRect.left + playerRect.width - playerRect.width * 0.35
         };
 
         for (let coin of coins) {

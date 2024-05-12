@@ -2,12 +2,11 @@ import { GAME_SETTINGS } from "../utils/constants.js";
 export class Coin {
     constructor() {
         this.id = Math.floor(Math.random() * 1000);
-        this.x = Math.floor(Math.random() * 100);
-        this.y = Math.floor(Math.random() * 100);
         this.width = GAME_SETTINGS.COIN_WIDTH;
         this.height = GAME_SETTINGS.COIN_HEIGHT;
         this.value = GAME_SETTINGS.COIN_VALUE;
         this.element = null;
+        this.getCoinPosition();
     }
 
     createCoinElement() {
@@ -25,5 +24,13 @@ export class Coin {
         coinElement.style.zIndex = '1';
         this.element = coinElement;
         return coinElement;
+    }
+
+    getCoinPosition() {
+        const window = document.querySelector('#game-container').getBoundingClientRect();
+        const x = Math.floor(Math.random() * window.width);
+        const y = Math.floor(Math.random() * window.height);
+        this.x = x;
+        this.y = y;
     }
 }
